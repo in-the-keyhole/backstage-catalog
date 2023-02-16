@@ -1,2 +1,2 @@
 # backstage-catalog
-This is the backstage-catalog for keyhole software
+This is the Backstage Software Catalog for Keyhole Software

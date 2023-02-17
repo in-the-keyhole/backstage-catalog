@@ -1,30 +1,53 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: keyhole-react-app-template
-  title: Keyhole React App Template
-  description: Create a new CRA webapp
+  name: react-app-template
+  title: React App
+  description: Create a new CRA application
   tags:
     - react
     - cra
 spec:
-  owner: web@example.com
+  owner: keyhole-developers
   type: website
   parameters:
     - title: Provide some simple information
       required:
         - component_id
+        # - system
+        - lifecycle
         - owner
+        # - type
       properties:
         component_id:
           title: Name
           type: string
+          pattern: "^([a-z0-9\\-]+)$"
           description: Unique name of the component
           ui:field: EntityNamePicker
+          ui:autofocus: true
         description:
           title: Description
           type: string
           description: Help others understand what this website is for.
+        # system:
+        #   title: System
+        #   type: string
+        #   description: System of the component
+        #   ui:field: EntityPicker
+        #   ui:options:
+        #     allowedKinds:
+        #       - System
+        #     defaultKind: System
+        lifecycle:
+          title: Lifecycle
+          description: 'Application lifecycle'
+          type: string
+          default: experimental
+          enum:
+            - deprecated
+            - experimental
+            - production
         owner:
           title: Owner
           type: string
@@ -44,19 +67,23 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+            allowedOwners:
+              - in-the-keyhole
+
   steps:
     - id: template
       name: Fetch Skeleton + Template
       action: fetch:template
       input:
         url: ./content
-        copyWithoutRender:
-          - .github/workflows/*
+        # copyWithoutRender:
+        #   - .github/workflows/*
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           owner: ${{ parameters.owner }}
+          env: dev
 
     - id: publish
       name: Publish
@@ -66,6 +93,9 @@ spec:
           - github.com
         description: This is ${{ parameters.component_id }}
         repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        repoVisibility: public
+        gitCommitMessage: ":robot: First Commit"
 
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates

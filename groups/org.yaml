@@ -1,19 +1,37 @@
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: guest
+spec:
+  memberOf: [guests]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
-  name: keyhole-developers
-  description: Keyhole Developers
-
-  links:
-    - url: http://keyholesoftware.com/
-      title: Website
+  name: guests
 spec:
-  type: organization
-  profile:
-    displayName: Keyhole Software
-    email: jniswonger@keyholesoftware.com
-    # picture: https://avatars.dicebear.com/api/identicon/info@example.com.svg?background=%23fff&margin=25
-  children: [group:engineering]
+  type: team
+  children: []
+
+# apiVersion: backstage.io/v1alpha1
+# kind: Group
+# metadata:
+#   name: keyhole-developers
+#   description: Keyhole Developers
+
+#   links:
+#     - url: http://keyholesoftware.com/
+#       title: Website
+# spec:
+#   type: organization
+#   profile:
+#     displayName: Keyhole Software
+#     email: jniswonger@keyholesoftware.com
+#     # picture: https://avatars.dicebear.com/api/identicon/info@example.com.svg?background=%23fff&margin=25
+#   children: [group:engineering]
 
 # ---
 # apiVersion: backstage.io/v1alpha1

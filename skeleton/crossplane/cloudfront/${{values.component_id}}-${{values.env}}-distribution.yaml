@@ -186,6 +186,6 @@ spec:
     name: ${{ generated_name }}.keyhole.institute
     region: us-east-1
     alias:
-      - name: $(crossplane.ref("aws_cloudfront_distribution", generated_name).domain_name)
+      - name: $(crossplane.ref("aws_cloudfront_distribution", $(var.generated_name)).domain_name)
         zoneId: Z2FDTNDATAQYW2
         evaluateTargetHealth: false

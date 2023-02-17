@@ -1,15 +1,20 @@
+{% set generated_name =  ${{ values.component_id }}-${{ values.env }} %}
+{% set bucket_name =  ${{ generated_name }}-${{range(1000)|random}} %}
+---
 apiVersion: cloudfront.aws.upbound.io/v1beta1
 kind: Distribution
 metadata:
   annotations:
     # meta.upbound.io/example-id: cloudfront/v1beta1/distribution
   labels:
-    testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
-  name: ${{ values.component_id }}-${{ values.env }}
+    # testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+    testing.upbound.io/example-name: ${{ generated_name }}
+  # name: ${{ values.component_id }}-${{ values.env }}
+  name: ${{ generated_name }}
 spec:
   forProvider:
-    # aliases:
-    # - crossplane-example.keyhole.institute
+    aliases:
+    - ${{ generated_name }}.keyhole.institute
     # - yoursite.example.com
     comment: ${{ values.description }}
     defaultCacheBehavior:
@@ -83,7 +88,8 @@ spec:
     #   viewerProtocolPolicy: redirect-to-https
     origin:
     # - domainName: ${aws_s3_bucket.crossplane-example.bucket_regional_domain_name}
-    - domainName: ${{ values.component_id }}-${{ values.env }}.s3-website.us-east-2.amazonaws.com
+    # - domainName: ${{ values.component_id }}-${{ values.env }}.s3-website.us-east-2.amazonaws.com
+    - domainName: ${{ bucket_name }}.s3-website.us-east-2.amazonaws.com
       # originAccessControlId: ${aws_cloudfront_origin_access_control.default.id}
       # originId: ${local.s3_origin_id}
       originId: s3_origin
@@ -108,8 +114,9 @@ spec:
     tags:
       Environment: development
     viewerCertificate:
-    - cloudfrontDefaultCertificate: true
-      # acmCertificateArn: arn:aws:acm:us-east-1:999330780379:certificate/95bc1cd7-4d73-4499-9a64-8f883d551c56
+    # - cloudfrontDefaultCertificate: true
+    - cloudfrontDefaultCertificate: false
+      acmCertificateArn: arn:aws:acm:us-east-1:999330780379:certificate/95bc1cd7-4d73-4499-9a64-8f883d551c56
 
 ---
 
@@ -120,25 +127,30 @@ metadata:
     # crossplane.io/external-name: ${Rand.RFC1123Subdomain}
     # meta.upbound.io/example-id: cloudfront/v1beta1/distribution
   labels:
-    testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
-  name: ${{ values.component_id }}-${{ values.env }}-${{range(1000)|random}} 
+    # testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+    testing.upbound.io/example-name: ${{ generated_name }}
+  # name: ${{ values.component_id }}-${{ values.env }}-${{range(1000)|random}} 
+  name: ${{ bucket_name }}
 spec:
   forProvider:
     region: us-east-2
     tags:
-      Name: Bucket for ${{ values.component_id }}-${{ values.env }}
+      # Name: ${{ values.component_id }}-${{ values.env }}
+      Name: ${{ generated_name }}
 
 ---
 
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: BucketWebsiteConfiguration
 metadata:
-  name: ${{ values.component_id }}
+  # name: ${{ values.component_id }}
+  name: ${{ generated_name }}
 spec:
   forProvider:
     bucketSelector:
       matchLabels:
-        testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+        # testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+        testing.upbound.io/example-name: ${{ generated_name }}
     errorDocument:
       - key: error.html
     indexDocument:
@@ -158,13 +170,16 @@ metadata:
   annotations:
     # meta.upbound.io/example-id: s3/v1beta1/bucketpolicy
   labels:
-    testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}-bucket-policy
-  name: ${{ values.component_id }}-${{ values.env }}-bucket-policy
+    # testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}-bucket-policy
+    testing.upbound.io/example-name: ${{ generated_name }}-bucket-policy
+  # name: ${{ values.component_id }}-${{ values.env }}-bucket-policy
+  name: ${{ generated_name }}-bucket-policy
 spec:
   forProvider:
     bucketSelector:
       matchLabels:
-        testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+        # testing.upbound.io/example-name: ${{ values.component_id }}-${{ values.env }}
+        testing.upbound.io/example-name: ${{ generated_name }}
     policy: >
       {
           "Version": "2012-10-17",
@@ -174,7 +189,7 @@ spec:
                   "Effect": "Allow",
                   "Principal": "*",
                   "Action": "s3:GetObject",
-                  "Resource": "arn:aws:s3:::${{ values.component_id }}-${{ values.env }}/*"
+                  "Resource": "arn:aws:s3:::${{ bucket_name }}/*"
               }
           ]
       }

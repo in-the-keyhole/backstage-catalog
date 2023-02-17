@@ -100,7 +100,7 @@ spec:
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates
       action: fetch:template
-      if: ${{ parameters.kubernetes.status == true }}
+      # if: ${{ parameters.kubernetes.status == true }}
       input:
         targetPath: ./crossplane
         url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/cloudfront
@@ -122,7 +122,7 @@ spec:
     - id: gitops
       name: "Open PR in GitOps Repository"
       action: publish:github:pull-request
-      if: ${{ parameters.kubernetes.status == true }}
+      # if: ${{ parameters.kubernetes.status == true }}
       input:
         repoUrl: github.com?repo=keyhole-gitops&owner=${{ parameters.owner }}
         branchName: create-${{ parameters.component_id }}

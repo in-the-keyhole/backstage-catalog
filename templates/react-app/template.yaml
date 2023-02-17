@@ -85,17 +85,17 @@ spec:
           owner: ${{ parameters.owner }}
           env: dev
 
-    - id: publish
-      name: Publish
-      action: publish:github
-      input:
-        allowedHosts:
-          - github.com
-        description: This is ${{ parameters.component_id }}
-        repoUrl: ${{ parameters.repoUrl }}
-        defaultBranch: main
-        repoVisibility: public
-        gitCommitMessage: ":robot: First Commit"
+    # - id: publish
+    #   name: Publish
+    #   action: publish:github
+    #   input:
+    #     allowedHosts:
+    #       - github.com
+    #     description: This is ${{ parameters.component_id }}
+    #     repoUrl: ${{ parameters.repoUrl }}
+    #     defaultBranch: main
+    #     repoVisibility: public
+    #     gitCommitMessage: ":robot: First Commit"
 
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates

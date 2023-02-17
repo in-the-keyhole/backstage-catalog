@@ -124,7 +124,7 @@ spec:
       action: publish:github:pull-request
       # if: ${{ parameters.kubernetes.status == true }}
       input:
-        repoUrl: github.com?repo=keyhole-gitops&owner=${{ parameters.owner }}
+        repoUrl: github.com?repo=keyhole-gitops&owner=in-the-keyhole
         branchName: create-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create new App ${{ parameters.component_id }}'
         description: |

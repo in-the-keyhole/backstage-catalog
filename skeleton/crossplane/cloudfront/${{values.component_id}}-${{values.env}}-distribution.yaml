@@ -1,5 +1,5 @@
-{% set generated_name =  {{ values.component_id }}-{{ values.env }} %}
-{% set bucket_name =  {{ generated_name }}-{{range(1000)|random}} %}
+{% set generated_name =  values.component_id | concat('-', values.env) %}
+{% set bucket_name =  generated_name | concat('-', range(1000)|random) %}
 ---
 apiVersion: cloudfront.aws.upbound.io/v1beta1
 kind: Distribution

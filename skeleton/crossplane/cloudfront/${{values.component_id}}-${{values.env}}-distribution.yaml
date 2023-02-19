@@ -6,7 +6,7 @@ apiVersion: cloudfront.keyholesoftware.com/v1alpha1
 kind: Distribution
 metadata:
   namespace: default
-  name: ${{ component_id }}
+  name: ${{ values.component_id }}
 spec:
   parameters:
     region: us-east-2

@@ -8,6 +8,10 @@ metadata:
   annotations:
     github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
     backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://${{ values.component_id }}.keyhole.institute
+      title: keyhole-demo
+      icon: dashboard
 spec:
   type: website
   lifecycle: experimental

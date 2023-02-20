@@ -1,6 +1,3 @@
-# {% set generated_name =  [values.component_id, '-', values.env] | join %}
-# {% set bucket_name =  [generated_name,'-', (range(1000)|random)] | join %}
-
 ---
 apiVersion: cloudfront.keyholesoftware.com/v1alpha1
 kind: Distribution

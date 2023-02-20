@@ -12,6 +12,7 @@ metadata:
     - url: https://${{ values.component_id }}.keyhole.institute
       title: keyhole-demo
       icon: dashboard
+  argocd/app-name: ${{ values.component_id }}
 spec:
   type: website
   lifecycle: experimental

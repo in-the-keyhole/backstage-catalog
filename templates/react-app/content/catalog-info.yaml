@@ -8,11 +8,11 @@ metadata:
   annotations:
     github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
     backstage.io/techdocs-ref: dir:.
+    argocd/app-name: ${{ values.component_id }}
   links:
     - url: https://${{ values.component_id }}.keyhole.institute
       title: keyhole-demo
       icon: dashboard
-  argocd/app-name: ${{ values.component_id }}
 spec:
   type: website
   lifecycle: experimental

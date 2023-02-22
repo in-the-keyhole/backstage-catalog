@@ -72,12 +72,10 @@ spec:
 
   steps:
     - id: template
-      name: Fetch Skeleton + Template
+      name: Fetch React Template
       action: fetch:template
       input:
         url: ./content
-        # copyWithoutTemplating:
-        #   - .github/workflows/*
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
@@ -96,6 +94,24 @@ spec:
         defaultBranch: main
         repoVisibility: public
         gitCommitMessage: ":robot: First Commit"
+
+    - id: template
+      name: Fetch Github Workflow(s)
+      action: fetch:plain
+      input:
+        url: ./.github
+        targetPath: .github
+
+    - id: workflow-pr
+      name: "Open PR for Github Workflow(s)"
+      action: publish:github:pull-request
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        branchName: add-workflow-${{ parameters.component_id }}
+        title: ':robot: [backstage-bot] Create workflow'
+        description: |
+          # Workflow for: ${{ parameters.component_id }}
+        sourcePath: .github
 
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates
@@ -132,25 +148,6 @@ spec:
           ${{ parameters.description if parameters.description }}
         sourcePath: crossplane
         targetPath: apps
-
-    - id: template
-      name: Fetch Github Workflow(s)
-      action: fetch:plain
-      input:
-        url: ./.github
-        targetPath: .github
-
-    - id: workflow-pr
-      name: "Open PR for Workflow(s) in application repository"
-      action: publish:github:pull-request
-      input:
-        repoUrl: ${{ parameters.repoUrl }}
-        branchName: add-workflow-${{ parameters.component_id }}
-        title: ':robot: [backstage-bot] Create workflow'
-        description: |
-          # Workflow for: ${{ parameters.component_id }}
-        sourcePath: .github
-        targetPath: /
 
     - id: register
       name: Register

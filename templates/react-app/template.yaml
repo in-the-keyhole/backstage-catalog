@@ -109,10 +109,8 @@ spec:
         repoUrl: ${{ parameters.repoUrl }}
         branchName: add-workflow-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create workflow'
-        reviewers:
-          - jaimeniswonger
         description: |
-          # Workflow for: ${{ parameters.component_id }}
+          # Adds Github Action Workflow -- merge after infrastructure provisioning is complete
 
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates

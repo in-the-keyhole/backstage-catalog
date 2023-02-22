@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  run:
+  deploy:
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: {% raw %}${{ secrets.AWS_ACCESS_KEY_ID }}{% endraw %}

@@ -147,9 +147,8 @@ spec:
         repoUrl: ${{ parameters.repoUrl }}
         branchName: add-workflow-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create workflow'
-        # description: |
-        #   # New project: ${{ parameters.component_id }}
-        #   ${{ parameters.description if parameters.description }}
+        description: |
+          # Workflow for: ${{ parameters.component_id }}
         sourcePath: .github
         targetPath: /
 

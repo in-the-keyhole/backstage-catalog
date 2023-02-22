@@ -115,7 +115,6 @@ spec:
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates
       action: fetch:template
-      # if: ${{ parameters.kubernetes.status == true }}
       input:
         targetPath: ./crossplane
         url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/cloudfront
@@ -125,19 +124,10 @@ spec:
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           owner: ${{ parameters.owner }}
           env: dev
-          # autoscaling:  ${{ parameters.autoscaling.enabled }}
-          # minReplicas: ${{ parameters.autoscaling.minReplicas }}
-          # maxReplicas: ${{ parameters.autoscaling.maxReplicas }}
-          # targetCPUUtilizationPercentage: ${{ parameters.autoscaling.targetCPUUtilizationPercentage }}
-          # requests_memory: ${{ parameters.resources.requests.memory }}
-          # requests_cpu: ${{ parameters.resources.requests.cpu }}
-          # limits_memory: ${{ parameters.resources.limits.memory }}
-          # limits_cpu: ${{ parameters.resources.limits.cpu }}
 
     - id: gitops-pr
       name: "Open PR for Crossplane resources in GitOps Repository"
       action: publish:github:pull-request
-      # if: ${{ parameters.kubernetes.status == true }}
       input:
         repoUrl: github.com?repo=keyhole-gitops&owner=in-the-keyhole
         branchName: create-${{ parameters.component_id }}

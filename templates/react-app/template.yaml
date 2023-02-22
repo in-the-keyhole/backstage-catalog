@@ -94,13 +94,13 @@ spec:
         defaultBranch: main
         repoVisibility: public
         gitCommitMessage: ":robot: First Commit"
+        protectDefaultBranch: false
 
     - id: template
       name: Fetch Github Workflow(s)
       action: fetch:plain
       input:
-        url: ./.github
-        targetPath: .github
+        url: ./workflow
 
     - id: workflow-pr
       name: "Open PR for Github Workflow(s)"
@@ -109,9 +109,9 @@ spec:
         repoUrl: ${{ parameters.repoUrl }}
         branchName: add-workflow-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create workflow'
+        reviewers: jaimeniswonger
         description: |
           # Workflow for: ${{ parameters.component_id }}
-        sourcePath: .github
 
     - id: fetch-crossplane-templates
       name: Fetch Crossplane Templates

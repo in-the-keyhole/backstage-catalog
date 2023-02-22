@@ -7,9 +7,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: {% raw %}${{ secrets.AWS_ACCESS_KEY_ID }}{% endraw %}
-      AWS_SECRET_ACCESS_KEY: {% raw %}${{ secrets.AWS_SECRET_ACCESS_KEY }}{% endraw %}
-      AWS_DEFAULT_REGION: {% raw %}${{ secrets.AWS_DEFAULT_REGION }}{% endraw %}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
         - uses: actions/checkout@v3
 
@@ -28,7 +28,7 @@ jobs:
           uses: reggionick/s3-deploy@v3
           with:
             folder: build
-            bucket: {% raw %}${{ secrets.S3_BUCKET }}{% endraw %}
-            bucket-region: {% raw %}${{ env.AWS_DEFAULT_REGION }}{% endraw %}
+            bucket: ${{ secrets.S3_BUCKET }}
+            bucket-region: ${{ env.AWS_DEFAULT_REGION }}
             delete-removed: true
-            dist-id: {% raw %}${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}{% endraw %}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}

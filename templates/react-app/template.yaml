@@ -76,7 +76,7 @@ spec:
       action: fetch:template
       input:
         url: ./content
-        # copyWithoutRender:
+        # copyWithoutTemplating:
         #   - .github/workflows/*
         values:
           component_id: ${{ parameters.component_id }}
@@ -91,7 +91,7 @@ spec:
       input:
         allowedHosts:
           - github.com
-        description: This is ${{ parameters.component_id }}
+        description: ${{ parameters.description }}
         repoUrl: ${{ parameters.repoUrl }}
         defaultBranch: main
         repoVisibility: public
@@ -119,8 +119,8 @@ spec:
           # limits_memory: ${{ parameters.resources.limits.memory }}
           # limits_cpu: ${{ parameters.resources.limits.cpu }}
 
-    - id: gitops
-      name: "Open PR in GitOps Repository"
+    - id: gitops-pr
+      name: "Open PR for Crossplane resources in GitOps Repository"
       action: publish:github:pull-request
       # if: ${{ parameters.kubernetes.status == true }}
       input:
@@ -132,6 +132,26 @@ spec:
           ${{ parameters.description if parameters.description }}
         sourcePath: crossplane
         targetPath: apps
+
+    - id: template
+      name: Fetch Github Workflow(s)
+      action: fetch:plain
+      input:
+        url: ./.github
+        targetPath: .github
+
+    - id: workflow-pr
+      name: "Open PR for Workflow(s) in application repository"
+      action: publish:github:pull-request
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        branchName: add-workflow-${{ parameters.component_id }}
+        title: ':robot: [backstage-bot] Create workflow'
+        # description: |
+        #   # New project: ${{ parameters.component_id }}
+        #   ${{ parameters.description if parameters.description }}
+        sourcePath: .github
+        targetPath: /
 
     - id: register
       name: Register

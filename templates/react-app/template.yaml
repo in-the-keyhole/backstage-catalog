@@ -109,7 +109,8 @@ spec:
         repoUrl: ${{ parameters.repoUrl }}
         branchName: add-workflow-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create workflow'
-        reviewers: jaimeniswonger
+        reviewers:
+          - jaimeniswonger
         description: |
           # Workflow for: ${{ parameters.component_id }}
 

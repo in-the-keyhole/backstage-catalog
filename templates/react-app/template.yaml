@@ -69,6 +69,8 @@ spec:
               - github.com
             allowedOwners:
               - in-the-keyhole
+            allowedRepos:
+              - ${{ parameters.component_id }}
 
   steps:
     - id: template

@@ -84,7 +84,7 @@ spec:
           env: dev
 
     - id: publish
-      name: Publish
+      name: Publish to Github
       action: publish:github
       input:
         allowedHosts:

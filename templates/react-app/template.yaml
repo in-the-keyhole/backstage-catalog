@@ -64,13 +64,12 @@ spec:
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
+          ui:autofocus: true
           ui:options:
             allowedHosts:
               - github.com
             allowedOwners:
               - in-the-keyhole
-            allowedRepos:
-              - ${{ parameters.component_id }}
 
   steps:
     - id: template

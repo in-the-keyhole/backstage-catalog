@@ -1,0 +1,18 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: timesheet
+  description: Timesheet
+spec:
+  owner: developers
+  domain: timesheet
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: now-playing
+  description: Now Playing
+spec:
+  owner: developers
+  domain: now-playing

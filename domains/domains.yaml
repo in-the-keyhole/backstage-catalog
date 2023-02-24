@@ -1,0 +1,16 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: timesheet
+  description: Everything related to timesheet system
+spec:
+  owner: user:jaime.niswonger
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: now-playing
+  description: Everything related to now-playing system
+spec:
+  owner: user:jaime.niswonger

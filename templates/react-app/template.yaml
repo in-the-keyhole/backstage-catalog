@@ -14,7 +14,7 @@ spec:
     - title: Provide some simple information
       required:
         - component_id
-        # - system
+        - system
         - lifecycle
         - owner
         # - type
@@ -30,22 +30,21 @@ spec:
           title: Description
           type: string
           description: Help others understand what this website is for.
-        # system:
-        #   title: System
-        #   type: string
-        #   description: System of the component
-        #   ui:field: EntityPicker
-        #   ui:options:
-        #     allowedKinds:
-        #       - System
-        #     defaultKind: System
+        system:
+          title: System
+          type: string
+          description: System of the component
+          ui:field: EntityPicker
+          ui:options:
+            allowedKinds:
+              - System
+            defaultKind: System
         lifecycle:
           title: Lifecycle
           description: 'Application lifecycle'
           type: string
-          default: experimental
+          default: production
           enum:
-            - deprecated
             - experimental
             - production
         owner:

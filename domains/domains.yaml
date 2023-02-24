@@ -2,6 +2,14 @@
 apiVersion: backstage.io/v1alpha1
 kind: Domain
 metadata:
+  name: demo
+  description: Everything related to demo system
+spec:
+  owner: user:jaime.niswonger
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
   name: timesheet
   description: Everything related to timesheet system
 spec:

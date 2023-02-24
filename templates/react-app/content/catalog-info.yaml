@@ -15,5 +15,6 @@ metadata:
       icon: dashboard
 spec:
   type: website
+  system: ${{ values.system}}
   lifecycle: ${{ values.lifecycle }}
   owner: ${{values.owner | dump}}

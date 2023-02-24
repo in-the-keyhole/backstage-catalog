@@ -79,6 +79,7 @@ spec:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          lifecycle: ${{ parameters.lifecycle }}
           owner: ${{ parameters.owner }}
           env: dev
 
@@ -121,6 +122,7 @@ spec:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          lifecycle: ${{ parameters.lifecycle }}
           owner: ${{ parameters.owner }}
           env: dev
 

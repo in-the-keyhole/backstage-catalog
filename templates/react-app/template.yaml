@@ -71,7 +71,7 @@ spec:
 
   steps:
     - id: template
-      name: Fetch React Template
+      name: Create React application from template...
       action: fetch:template
       input:
         url: ./content
@@ -85,7 +85,7 @@ spec:
           env: dev
 
     - id: publish
-      name: Publish to Github
+      name: Publish application on Github
       action: publish:github
       input:
         allowedHosts:
@@ -98,23 +98,23 @@ spec:
         protectDefaultBranch: false
 
     - id: template
-      name: Fetch Github Workflow(s)
+      name: Create Pipeline (Github Actions)
       action: fetch:plain
       input:
         url: ./workflow
 
     - id: workflow-pr
-      name: "Open PR for Github Workflow(s)"
+      name: "Create PR for Pipeline"
       action: publish:github:pull-request
       input:
         repoUrl: ${{ parameters.repoUrl }}
         branchName: add-workflow-${{ parameters.component_id }}
         title: ':robot: [backstage-bot] Create workflow'
         description: |
-          # Adds Github Action Workflow -- merge after infrastructure provisioning is complete
+          # Added Github Actions Workflow -- merge after infrastructure provisioning is complete
 
     - id: fetch-crossplane-templates
-      name: Fetch Crossplane Templates
+      name: Create infrastructure configuration (Crossplane)
       action: fetch:template
       input:
         targetPath: ./crossplane
@@ -129,7 +129,7 @@ spec:
           env: dev
 
     - id: gitops-pr
-      name: "Open PR for Crossplane resources in GitOps Repository"
+      name: "Create PR for infrastructure provisioning"
       action: publish:github:pull-request
       input:
         repoUrl: github.com?repo=keyhole-gitops&owner=in-the-keyhole
@@ -142,7 +142,7 @@ spec:
         targetPath: apps
 
     - id: register
-      name: Register
+      name: Register the new application
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}

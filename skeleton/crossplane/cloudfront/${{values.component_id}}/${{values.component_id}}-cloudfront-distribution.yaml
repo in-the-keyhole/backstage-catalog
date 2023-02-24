@@ -9,4 +9,4 @@ spec:
     region: us-east-2
     dnsSuffix: keyhole.institute
   compositionRef:
-    name: cloudfront-distribution
+    name: distribution

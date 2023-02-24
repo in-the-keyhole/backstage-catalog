@@ -2,6 +2,15 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: demo
+  description: Demo
+spec:
+  owner: developers
+  domain: demo
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
   name: timesheet
   description: Timesheet
 spec:

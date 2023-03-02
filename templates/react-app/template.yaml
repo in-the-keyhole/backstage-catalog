@@ -129,6 +129,7 @@ spec:
       name: Generate Pipeline (Github Actions)
       action: fetch:plain
       input:
+        targetPath: ./workflow
         url: ./workflow
 
     - id: workflow-pr

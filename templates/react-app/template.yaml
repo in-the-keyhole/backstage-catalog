@@ -140,7 +140,7 @@ spec:
         title: ':robot: [backstage-bot] Create workflow'
         description: |
           # Added Github Actions Workflow -- merge after infrastructure provisioning is complete
-
+        sourcePath: workflow
 
     - id: register
       name: Add the application to the catalog

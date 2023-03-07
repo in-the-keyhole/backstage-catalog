@@ -1,13 +1,13 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: graphql-api-template
-  title: GraphQL API
-  description: Create a new GraphQL API
+  name: rest-api-csharp-template
+  title: ReST API - C#
+  description: Create a new ReST API using C#
   tags:
     - api
-    - graphql
-    - apollo
+    - rest
+    - c#
 spec:
   owner: keyhole-developers
   type: api

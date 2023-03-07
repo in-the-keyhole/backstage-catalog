@@ -1,0 +1,159 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: graphql-api-template
+  title: GraphQL API
+  description: Create a new GraphQL API
+  tags:
+    - graphql
+    - apollo
+spec:
+  owner: keyhole-developers
+  type: api
+  parameters:
+    - title: Provide some simple information
+      required:
+        - component_id
+        - system
+        - lifecycle
+        - owner
+        # - type
+      properties:
+        component_id:
+          title: Name
+          type: string
+          pattern: "^([a-z0-9\\-]+)$"
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this API is for.
+        system:
+          title: System
+          type: string
+          description: System of the component
+          ui:field: EntityPicker
+          ui:options:
+            allowedKinds:
+              - System
+            defaultKind: System
+        lifecycle:
+          title: Lifecycle
+          description: 'Application lifecycle'
+          type: string
+          default: production
+          enum:
+            - experimental
+            - production
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+            allowedOwners:
+              - in-the-keyhole
+
+  steps:
+    - id: template
+      name: Generate application codebase
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          system: ${{ parameters.system }}
+          lifecycle: ${{ parameters.lifecycle }}
+          owner: ${{ parameters.owner }}
+          env: dev
+
+    - id: publish
+      name: Create Github repository
+      action: publish:github
+      input:
+        allowedHosts:
+          - github.com
+        description: ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        repoVisibility: public
+        gitCommitMessage: ":robot: First Commit"
+        protectDefaultBranch: false
+
+    # # - id: fetch-crossplane-templates
+    # #   name: Generate infrastructure config (Crossplane)
+    # #   action: fetch:template
+    # #   input:
+    # #     targetPath: ./crossplane
+    # #     url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/cloudfront
+    # #     values:
+    # #       component_id: ${{ parameters.component_id }}
+    # #       description: ${{ parameters.description }}
+    # #       destination: ${{ parameters.repoUrl | parseRepoUrl }}
+    # #       system: ${{ parameters.system }}
+    # #       lifecycle: ${{ parameters.lifecycle }}
+    # #       owner: ${{ parameters.owner }}
+    # #       env: dev
+
+    # # - id: gitops-pr
+    # #   name: "Issue Pull Request to provision infrastructure"
+    # #   action: publish:github:pull-request
+    # #   input:
+    # #     repoUrl: github.com?repo=keyhole-gitops&owner=in-the-keyhole
+    # #     branchName: create-${{ parameters.component_id }}
+    # #     title: ':robot: [backstage-bot] Create infrastructure for new app: ${{ parameters.component_id }}'
+    # #     description: |
+    # #       # New project: ${{ parameters.component_id }}
+    # #       ${{ parameters.description if parameters.description }}
+    # #     sourcePath: crossplane
+    # #     targetPath: apps
+
+    # - id: template
+    #   name: Generate Pipeline (Github Actions)
+    #   action: fetch:plain
+    #   input:
+    #     targetPath: ./workflow
+    #     url: ./workflow
+
+    # - id: workflow-pr
+    #   name: Issue Pull Requst for Pipeline
+    #   action: publish:github:pull-request
+    #   input:
+    #     repoUrl: ${{ parameters.repoUrl }}
+    #     branchName: add-workflow-${{ parameters.component_id }}
+    #     title: ':robot: [backstage-bot] Create workflow'
+    #     description: |
+    #       # Added Github Actions Workflow -- merge after infrastructure provisioning is complete
+    #     sourcePath: workflow
+
+    - id: register
+      name: Add the application to the catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

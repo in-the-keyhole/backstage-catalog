@@ -2,8 +2,8 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: graphql-api-template
-  title: GraphQL API
-  description: Create a new GraphQL API
+  title: GraphQL API - Serverless
+  description: Create a new GraphQL API using the Serverless Framework
   tags:
     - api
     - graphql

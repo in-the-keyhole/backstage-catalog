@@ -11,17 +11,17 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: timesheet
-  description: Timesheet
+  name: accounting
+  description: Accounting
 spec:
   owner: developers
-  domain: timesheet
+  domain: accounting
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: now-playing
-  description: Now Playing
+  name: billing
+  description: Billing
 spec:
   owner: developers
-  domain: now-playing
+  domain: billing

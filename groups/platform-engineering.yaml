@@ -16,10 +16,21 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
-  name: bob.thebuilder
+  name: bob.jones
 spec:
   profile:
     # Intentional no displayName for testing
     email: bob@keyholesoftware.com
+    picture: https://avatars.dicebear.com/api/avataaars/bob@keyholesoftware.com.svg?background=%23fff
+  memberOf: [platform-engineering]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: jack.knight
+spec:
+  profile:
+    # Intentional no displayName for testing
+    email: jack@keyholesoftware.com
     picture: https://avatars.dicebear.com/api/avataaars/bob@keyholesoftware.com.svg?background=%23fff
   memberOf: [platform-engineering]

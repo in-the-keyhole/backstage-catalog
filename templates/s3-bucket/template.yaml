@@ -1,0 +1,114 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: s3-bucket-template
+  title: S3 Bucket
+  description: Create a new S3 Bucket
+  tags:
+    - resource
+    - aws
+    - s3
+spec:
+  owner: keyhole-developers
+  type: resource
+  parameters:
+    - title: Provide some simple information
+      required:
+        - component_id
+        - system
+        - lifecycle
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          pattern: "^([a-z0-9\\-]+)$"
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this API is for.
+        system:
+          title: System
+          type: string
+          description: System of the component
+          ui:field: EntityPicker
+          ui:options:
+            allowedKinds:
+              - System
+            defaultKind: System
+        lifecycle:
+          title: Lifecycle
+          description: 'Application lifecycle'
+          type: string
+          default: production
+          enum:
+            - experimental
+            - production
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Choose a location
+      required:
+        - region
+      properties:
+        region:
+          title: Region
+          description: 'AWS Region'
+          type: string
+          default: us-east-2
+          enum:
+            - us-east-1
+            - us-east-2
+
+  steps:
+
+    - id: fetch-crossplane-templates
+      name: Generate infrastructure config (Crossplane)
+      action: fetch:template
+      input:
+        targetPath: ./crossplane/s3
+        url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/cloudfront
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          system: ${{ parameters.system }}
+          lifecycle: ${{ parameters.lifecycle }}
+          owner: ${{ parameters.owner }}
+          env: dev
+
+    - id: gitops-pr
+      name: "Issue Pull Request to provision infrastructure"
+      action: publish:github:pull-request
+      input:
+        repoUrl: github.com?repo=keyhole-gitops&owner=in-the-keyhole
+        branchName: create-${{ parameters.component_id }}
+        title: ':robot: [backstage-bot] Create infrastructure for new s3 bucket: ${{ parameters.component_id }}'
+        description: |
+          # New project: ${{ parameters.component_id }}
+          ${{ parameters.description if parameters.description }}
+        sourcePath: s3
+        targetPath: aws-resources
+
+    - id: register
+      name: Add the resource to the catalog
+      action: catalog:register
+      input:
+        # repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+  output:
+    links:
+      # - title: Repository
+      #   url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

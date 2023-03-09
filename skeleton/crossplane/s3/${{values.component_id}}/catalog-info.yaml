@@ -6,15 +6,15 @@ metadata:
   description: ${{values.description | dump}}
   {%- endif %}
   annotations:
-    github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
-    backstage.io/techdocs-ref: dir:.
-    argocd/app-name: ${{ values.component_id }}
-  links:
-    - url: https://${{ values.component_id }}.keyhole.institute
-      title: keyhole-demo
-      icon: dashboard
+    # github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
+    # backstage.io/techdocs-ref: dir:.
+    argocd/app-name: aws-resources
+  # links:
+  #   - url: https://${{ values.component_id }}.keyhole.institute
+  #     title: keyhole-demo
+  #     icon: dashboard
 spec:
-  type: website
+  type: resource
   system: ${{ values.system}}
   lifecycle: ${{ values.lifecycle }}
   owner: ${{values.owner | dump}}

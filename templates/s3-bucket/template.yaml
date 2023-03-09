@@ -74,8 +74,8 @@ spec:
       name: Generate infrastructure config (Crossplane)
       action: fetch:template
       input:
-        targetPath: ./crossplane/s3
-        url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/cloudfront
+        targetPath: ./crossplane
+        url: https://github.com/in-the-keyhole/backstage-catalog/tree/main/skeleton/crossplane/s3
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
@@ -96,7 +96,7 @@ spec:
         description: |
           # New project: ${{ parameters.component_id }}
           ${{ parameters.description if parameters.description }}
-        sourcePath: crossplane/s3
+        sourcePath: crossplane
         targetPath: aws-resources
 
     - id: register

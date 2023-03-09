@@ -95,7 +95,7 @@ spec:
         description: |
           # New project: ${{ parameters.component_id }}
           ${{ parameters.description if parameters.description }}
-        sourcePath: s3
+        sourcePath: crossplane/s3
         targetPath: aws-resources
 
     - id: register

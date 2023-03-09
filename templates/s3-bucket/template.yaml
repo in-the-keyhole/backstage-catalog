@@ -60,8 +60,8 @@ spec:
         - region
       properties:
         region:
-          title: Region
-          description: 'AWS Region'
+          title: AWS Region
+          description: 'Specify the region for the new bucket'
           type: string
           default: us-east-2
           enum:
@@ -97,19 +97,19 @@ spec:
           # New project: ${{ parameters.component_id }}
           ${{ parameters.description if parameters.description }}
         sourcePath: crossplane
-        targetPath: aws-resources
+        targetPath: aws-resources/s3
 
     - id: register
       name: Add the resource to the catalog
       action: catalog:register
       input:
-        # repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        repoContentsUrl: https://github.com/in-the-keyhole/git-ops/aws-resources/s3/${{ parameters.component_id }}
         catalogInfoPath: "/catalog-info.yaml"
 
   output:
     links:
-      # - title: Repository
-      #   url: ${{ steps.publish.output.remoteUrl }}
+      - title: Repository
+        url: https://github.com/in-the-keyhole/git-ops/aws-resources/s3/${{ parameters.component_id }}
       - title: Open in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}

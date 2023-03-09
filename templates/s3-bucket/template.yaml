@@ -9,7 +9,7 @@ metadata:
     - aws
     - s3
 spec:
-  owner: keyhole-developers
+  owner: platform-engineering
   type: resource
   parameters:
     - title: Provide some simple information

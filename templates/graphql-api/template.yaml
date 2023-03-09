@@ -9,7 +9,7 @@ metadata:
     - graphql
     - apollo
 spec:
-  owner: keyhole-developers
+  owner: platform-engineering
   type: api
   parameters:
     - title: Provide some simple information

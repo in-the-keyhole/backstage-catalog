@@ -8,7 +8,7 @@ metadata:
     - react
     - cra
 spec:
-  owner: keyhole-developers
+  owner: platform-engineering
   type: website
   parameters:
     - title: Provide some simple information

@@ -83,6 +83,7 @@ spec:
           system: ${{ parameters.system }}
           lifecycle: ${{ parameters.lifecycle }}
           owner: ${{ parameters.owner }}
+          region: ${{ parameters.region }}
           env: dev
 
     - id: gitops-pr
